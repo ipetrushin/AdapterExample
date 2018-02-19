@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AdapterExample</string>
+    <string-array name="pesenki" >
+        <item>gngnognwioeD</item>
+        <item>gngnognwioeD</item>
+        <item>gngnognwioeD</item>
+        <item>gngnognwioeD</item>
+        <item>gngnognwioeD</item>
+        <item>gngnognwioeD</item>
+    </string-array>
+
+</resources>
