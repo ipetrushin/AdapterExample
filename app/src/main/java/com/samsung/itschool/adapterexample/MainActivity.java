@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         // 1)
         // сделать выборку всех полей из таблицы в Cursor
+        // db.rawQuery("<SQL QUERY>", null);
         // создать 2 массива: String[] перечень полей таблицы
         String[] fields = new String[] {"title"};
         int[] views = new int[]{ R.id.title };
@@ -40,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         // добавить в разметку недостающие поля
         // считать из текстовых полей
         // исполнителя, название композиции, год, длительность
-        // сделать запись в таблицу, обновить данные адаптера
+        // сделать запись в таблицу,
+        // обновить данные адаптера
+        //
     }
 }
