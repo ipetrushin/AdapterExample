@@ -1,41 +1,45 @@
 package com.samsung.itschool.adapterexample;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
-    ArrayList<Tune> list = new ArrayList<>();
-    ArrayList<String> titles = new ArrayList<>();
-    ListView lv;
-    ArrayAdapter<String> aa;
+
+    ListView lv; // не забудьте привязать переменную (findViewById)
+    SimpleCursorAdapter adapter; // объявлен в классе, чтобы был доступен вл всех методах
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String[] strings = getResources().getStringArray(R.array.titles);
-        //Tune pesenka = new Tune("U2", "Storm", 2000, 300);
-        for (String title: strings) {
-            titles.add(title);
-            //list.add(new Tune("U2", title, 2000, 300));
-        }
-        lv = (ListView) findViewById(R.id.playlist);
-         aa = new ArrayAdapter<String>(this, R.layout.item, titles);
-        lv.setAdapter(aa);
+        DBHelper helper = new DBHelper(this);
+        SQLiteDatabase db = helper.getWritableDatabase();
 
+        // 1)
+        // сделать выборку всех полей из таблицы в Cursor
+        // создать 2 массива: String[] перечень полей таблицы
+        String[] fields = new String[] {"title"};
+        int[] views = new int[]{ R.id.title };
+        // int[] - ссылки на id элементов разметки playlist_item
+        // полученный Cursor использовать для создания адаптера
+        // готовый адаптер назначить для ListView
 
     }
 
     public void onClick(View v) {
-        TextView title = (TextView) findViewById(R.id.title);
-        titles.add(title.getText().toString());
-        aa.notifyDataSetChanged();
-
+        // 2)
+        // добавить в разметку недостающие поля
+        // считать из текстовых полей
+        // исполнителя, название композиции, год, длительность
+        // сделать запись в таблицу, обновить данные адаптера
     }
 }
