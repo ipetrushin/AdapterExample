@@ -11,6 +11,8 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -23,6 +25,19 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         DBHelper helper = new DBHelper(this);
         SQLiteDatabase db = helper.getWritableDatabase();
+
+        DBHelperWithLoader loader = new DBHelperWithLoader(this);
+        SQLiteDatabase musicDB = loader.getWritableDatabase();
+        // 3) реализовать отображение содержания таблицы
+        // с помощью SimpleCursorAdapter
+
+        Cursor tunes = musicDB.rawQuery("SELECT * FROM playlist", null);
+        String[] playlist_fields = tunes.getColumnNames();
+
+        // этот адаптер отображает в ListView перечень полей (столбцов)
+        ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.item, playlist_fields );
+        lv = (ListView) findViewById(R.id.playlist);
+        lv.setAdapter(aa);
 
         // 1)
         // сделать выборку всех полей из таблицы в Cursor
