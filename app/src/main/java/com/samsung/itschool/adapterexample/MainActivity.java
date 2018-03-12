@@ -28,7 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
         DBHelperWithLoader loader = new DBHelperWithLoader(this);
         SQLiteDatabase musicDB = loader.getWritableDatabase();
-        // 3) реализовать отображение содержания таблицы
+        // 3) Добавить загрузку БД из файла в папке assets
+        // реализовать отображение содержания таблицы
         // с помощью SimpleCursorAdapter
 
         Cursor tunes = musicDB.rawQuery("SELECT * FROM playlist", null);
