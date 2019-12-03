@@ -24,32 +24,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         DBHelper helper = new DBHelper(this);
-        SQLiteDatabase db = helper.getWritableDatabase();
+        SQLiteDatabase musicDB = helper.getWritableDatabase();
 
-        DBHelperWithLoader loader = new DBHelperWithLoader(this);
-        SQLiteDatabase musicDB = loader.getWritableDatabase();
+
         // 3) Добавить загрузку БД из файла в папке assets
         // реализовать отображение содержания таблицы
         // с помощью SimpleCursorAdapter
-
-        Cursor tunes = musicDB.rawQuery("SELECT * FROM playlist", null);
-        String[] playlist_fields = tunes.getColumnNames();
-
-        // этот адаптер отображает в ListView перечень полей (столбцов)
-        ArrayAdapter<String> aa = new ArrayAdapter<>(this, R.layout.item, playlist_fields );
-        lv = (ListView) findViewById(R.id.playlist);
-        lv.setAdapter(aa);
-
         // 1)
         // сделать выборку всех полей из таблицы в Cursor
         // db.rawQuery("<SQL QUERY>", null);
         // создать 2 массива: String[] перечень полей таблицы
-        String[] fields = new String[] {"title"};
-        int[] views = new int[]{ R.id.title };
+
+        Cursor tunes = musicDB.rawQuery("SELECT * FROM playlist", null);
+        String[] playlist_fields = tunes.getColumnNames();
+
         // int[] - ссылки на id элементов разметки playlist_item
         // полученный Cursor использовать для создания адаптера
         // готовый адаптер назначить для ListView
+        int[] views = { R.id.id, R.id.artist, R.id.title, R.id.year, R.id.duration };
 
+        // этот адаптер отображает в ListView перечень полей (столбцов)
+        SimpleCursorAdapter adapter = new SimpleCursorAdapter(this, R.layout.playlist_item, tunes, playlist_fields, views, 0 );
+        lv.setAdapter(adapter);
     }
 
     public void onClick(View v) {
